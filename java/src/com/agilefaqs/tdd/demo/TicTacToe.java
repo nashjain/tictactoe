@@ -1,7 +1,7 @@
 package com.agilefaqs.tdd.demo;
 
 public class TicTacToe {
-	static final char EMPTY = '\u0000';
+	public static final char EMPTY = '\u0000';
 	private final char[][] board;
 	private int moveCount;
 	private Referee refree;
@@ -31,54 +31,54 @@ public class TicTacToe {
 		if (board[x][y] != EMPTY)
 			throw new CellOccupiedException(x, y);
 	}
-}
 
-final class Referee {
-	private static final int NO_OF_DIAGONALS = 2;
-	private static final int MINOR = 1;
-	private static final int PRINCIPAL = 0;
-	private final int gridSize;
-	private final int[] rowTotal;
-	private final int[] colTotal;
-	private final int[] diagonalTotal;
+	private class Referee {
+		private static final int NO_OF_DIAGONALS = 2;
+		private static final int MINOR = 1;
+		private static final int PRINCIPAL = 0;
+		private final int gridSize;
+		private final int[] rowTotal;
+		private final int[] colTotal;
+		private final int[] diagonalTotal;
 
-	Referee(int size) {
-		gridSize = size;
-		rowTotal = new int[size];
-		colTotal = new int[size];
-		diagonalTotal = new int[NO_OF_DIAGONALS];
-	}
+		private Referee(int size) {
+			gridSize = size;
+			rowTotal = new int[size];
+			colTotal = new int[size];
+			diagonalTotal = new int[NO_OF_DIAGONALS];
+		}
 
-	void stopGameIfItsOver(int x, int y, char symbol, int moveCount) {
-		if (hasSomeoneWonTheGame(x, y, symbol))
-			throw new GameOverException(symbol + " won the game!");
-		if (isBoardCompletelyFilled(moveCount))
-			throw new GameOverException("Its a Draw!");
-	}
+		private void stopGameIfItsOver(int x, int y, char symbol, int moveCount) {
+			if (hasSomeoneWonTheGame(x, y, symbol))
+				throw new GameOverException(symbol + " won the game!");
+			if (isBoardCompletelyFilled(moveCount))
+				throw new GameOverException("Its a Draw!");
+		}
 
-	private boolean isBoardCompletelyFilled(int moveCount) {
-		return moveCount == gridSize * gridSize;
-	}
+		private boolean isBoardCompletelyFilled(int moveCount) {
+			return moveCount == gridSize * gridSize;
+		}
 
-	private boolean hasSomeoneWonTheGame(int x, int y, char symbol) {
-		if (isPrincipalDiagonal(x, y) && allSymbolsMatch(symbol, diagonalTotal, PRINCIPAL))
-			return true;
-		if (isMinorDiagonal(x, y) && allSymbolsMatch(symbol, diagonalTotal, MINOR))
-			return true;
-		return allSymbolsMatch(symbol, rowTotal, x) || allSymbolsMatch(symbol, colTotal, y);
-	}
+		private boolean hasSomeoneWonTheGame(int x, int y, char symbol) {
+			if (isPrincipalDiagonal(x, y) && allSymbolsMatch(symbol, diagonalTotal, PRINCIPAL))
+				return true;
+			if (isMinorDiagonal(x, y) && allSymbolsMatch(symbol, diagonalTotal, MINOR))
+				return true;
+			return allSymbolsMatch(symbol, rowTotal, x) || allSymbolsMatch(symbol, colTotal, y);
+		}
 
-	private boolean allSymbolsMatch(char symbol, int[] total, int index) {
-		total[index] += symbol;
-		return total[index] / gridSize == symbol;
-	}
+		private boolean allSymbolsMatch(char symbol, int[] total, int index) {
+			total[index] += symbol;
+			return total[index] / gridSize == symbol;
+		}
 
-	private boolean isPrincipalDiagonal(int x, int y) {
-		return x == y;
-	}
+		private boolean isPrincipalDiagonal(int x, int y) {
+			return x == y;
+		}
 
-	private boolean isMinorDiagonal(int x, int y) {
-		return x + y == gridSize - 1;
+		private boolean isMinorDiagonal(int x, int y) {
+			return x + y == gridSize - 1;
+		}
 	}
 }
 
@@ -92,4 +92,5 @@ final class GameOverException extends RuntimeException {
 	public GameOverException(String msg) {
 		super(msg);
 	}
+
 }
