@@ -38,6 +38,14 @@ class TicTacToeTest extends PHPUnit_Framework_TestCase
             array(TicTacToe::BLANK, TicTacToe::BLANK, 'O')));
     }
 
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testBoardHasToBeMinimum3x3Grid()
+    {
+        new TicTacToe(2);
+    }
+
     private function verify_board_is($expectedBoard)
     {
         $this->assertEquals($expectedBoard, $this->game->display_board());
