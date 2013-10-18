@@ -20,11 +20,11 @@ public class TicTacToe {
 	public String move(int x, int y) {
 		if (board[x][y] != BLANK)
 			return "(" + x + "," + y + ") is already occupied";
-		board[x][y] = currentSymbol();
+		board[x][y] = whoseTurn();
 		return refree.isGameOver(x, y, board[x][y], ++moveCount);
 	}
 
-	private char currentSymbol() {
+	private char whoseTurn() {
 		return moveCount % 2 == 0 ? 'X' : 'O';
 	}
 
