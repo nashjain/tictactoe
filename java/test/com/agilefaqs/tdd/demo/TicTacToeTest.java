@@ -14,8 +14,8 @@ public class TicTacToeTest {
 	@Test
 	public void allCellsAreEmptyInANewGame() {
 		assertBoardIs(new char[][] { { EMPTY, EMPTY, EMPTY },
-													{ EMPTY, EMPTY, EMPTY },
-													{ EMPTY, EMPTY, EMPTY } });
+				{ EMPTY, EMPTY, EMPTY },
+				{ EMPTY, EMPTY, EMPTY } });
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -27,8 +27,8 @@ public class TicTacToeTest {
 	public void firstPlayersMoveMarks_X_OnTheBoard() {
 		game.move(1, 1);
 		assertBoardIs(new char[][] { { EMPTY, EMPTY, EMPTY },
-													{ EMPTY, 'X', EMPTY },
-													{ EMPTY, EMPTY, EMPTY } });
+				{ EMPTY, 'X', EMPTY },
+				{ EMPTY, EMPTY, EMPTY } });
 	}
 
 	@Test
@@ -36,8 +36,8 @@ public class TicTacToeTest {
 		game.move(1, 1);
 		game.move(2, 2);
 		assertBoardIs(new char[][] { { EMPTY, EMPTY, EMPTY },
-													{ EMPTY, 'X', EMPTY },
-													{ EMPTY, EMPTY, 'O' } });
+				{ EMPTY, 'X', EMPTY },
+				{ EMPTY, EMPTY, 'O' } });
 	}
 
 	@Test
@@ -52,7 +52,7 @@ public class TicTacToeTest {
 	}
 
 	@Test
-	public void firstPlayerWithAllSysmbolsInOneRowWins() {
+	public void firstPlayerWithAllSymbolsInOneRowWins() {
 		game.move(0, 0);
 		game.move(1, 0);
 		game.move(0, 1);
@@ -61,7 +61,7 @@ public class TicTacToeTest {
 	}
 
 	@Test
-	public void firstPlayerWithAllSysmbolsInOneColumnWins() {
+	public void firstPlayerWithAllSymbolsInOneColumnWins() {
 		game.move(1, 1);
 		game.move(0, 0);
 		game.move(2, 1);
@@ -71,7 +71,7 @@ public class TicTacToeTest {
 	}
 
 	@Test
-	public void firstPlayerWithAllSysmbolsInTopRightToBottomLeftDiagonalWins() {
+	public void firstPlayerWithAllSymbolsInPrincipalDiagonalWins() {
 		game.move(0, 0);
 		game.move(1, 0);
 		game.move(1, 1);
@@ -80,7 +80,7 @@ public class TicTacToeTest {
 	}
 
 	@Test
-	public void firstPlayerWithAllSysmbolsInTopLeftToBottomRightDiagonalWins() {
+	public void firstPlayerWithAllSymbolsInMinorDiagonalWins() {
 		game.move(0, 2);
 		game.move(1, 0);
 		game.move(1, 1);
