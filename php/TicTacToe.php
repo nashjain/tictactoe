@@ -19,8 +19,11 @@ class TicTacToe {
 
     public function move($x, $y)
     {
+        if ($this->board[$x][$y] != TicTacToe::BLANK)
+            return "($x,$y) is already occupied";
         $this->board[$x][$y] = $this->whose_turn();
         $this->move_count++;
+        return "continue";
     }
 
     private function whose_turn()

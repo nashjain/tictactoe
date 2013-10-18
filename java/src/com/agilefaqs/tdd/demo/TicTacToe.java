@@ -8,7 +8,7 @@ public class TicTacToe {
 
 	public TicTacToe(int gridSize) {
 		if (gridSize < 3)
-			throw new IllegalArgumentException("TicTacToe board size has to be minium 3x3 grid");
+			throw new IllegalArgumentException("TicTacToe board size has to be minimum 3x3 grid");
 		board = new char[gridSize][gridSize];
 		refree = new Referee(gridSize);
 	}

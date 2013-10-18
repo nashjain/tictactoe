@@ -21,7 +21,7 @@ class TicTacToeTest extends PHPUnit_Framework_TestCase
 
     public function testFirstPlayersMoveMarks_X_OnTheBoard()
     {
-        $this->game->move(1, 1);
+        $this->assertEquals("continue", $this->game->move(1, 1));
         $this->verify_board_is(array(
             array(TicTacToe::BLANK, TicTacToe::BLANK, TicTacToe::BLANK),
             array(TicTacToe::BLANK, 'X', TicTacToe::BLANK),
@@ -31,7 +31,7 @@ class TicTacToeTest extends PHPUnit_Framework_TestCase
     public function testSecondPlayersMoveMarks_O_OnTheBoard()
     {
         $this->game->move(1, 1);
-        $this->game->move(2, 2);
+        $this->assertEquals("continue", $this->game->move(2, 2));
         $this->verify_board_is(array(
             array(TicTacToe::BLANK, TicTacToe::BLANK, TicTacToe::BLANK),
             array(TicTacToe::BLANK, 'X', TicTacToe::BLANK),
@@ -44,6 +44,12 @@ class TicTacToeTest extends PHPUnit_Framework_TestCase
     public function testBoardHasToBeMinimum3x3Grid()
     {
         new TicTacToe(2);
+    }
+
+    public function testPlayerCanOnlyMoveToAnEmptyCell()
+    {
+        $this->game->move(1, 1);
+        $this->assertEquals("(1,1) is already occupied", $this->game->move(1, 1));
     }
 
     private function verify_board_is($expectedBoard)
