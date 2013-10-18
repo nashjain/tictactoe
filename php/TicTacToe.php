@@ -56,10 +56,32 @@ class Referee
 
     public function is_game_over($x, $y, $symbol, $move_count)
     {
-        if ($this->has_won($x, $y, $symbol)) {
+        if ($this->has_won($x, $y, $symbol))
             return "$symbol won the Game!";
-        }
+        if ($this->is_board_completely_filled($move_count))
+            return "Its a Draw!";
         return "continue";
+    }
+
+    private function has_won($x, $y, $symbol)
+    {
+        if ($this->is_principal_diagonal($x, $y) and $this->all_symbols_match($symbol, 'diagonal_total', self::PRINCIPAL_DIAGONAL))
+            return true;
+        if ($this->is_minor_diagonal($x, $y) and $this->all_symbols_match($symbol, 'diagonal_total', self::MINOR_DIAGONAL))
+            return true;
+        return $this->all_symbols_match($symbol, 'row_total', $x) or $this->all_symbols_match($symbol, 'col_total', $y);
+    }
+
+    private function all_symbols_match($symbol, $total, $index)
+    {
+        $int_val_of_symbol = ord($symbol);
+        $this->$total[$index] += $int_val_of_symbol;
+        return $this->$total[$index] / $this->grid_size == $int_val_of_symbol;
+    }
+
+    private function  is_board_completely_filled($move_count)
+    {
+        return $move_count == $this->grid_size * $this->grid_size;
     }
 
     private function  is_principal_diagonal($x, $y)
@@ -70,21 +92,5 @@ class Referee
     private function is_minor_diagonal($x, $y)
     {
         return $x + $y == $this->grid_size - 1;
-    }
-
-    private function all_symbols_match($symbol, $total, $index)
-    {
-        $int_val_of_symbol = ord($symbol);
-        $this->$total[$index] += $int_val_of_symbol;
-        return $this->$total[$index] / $this->grid_size == $int_val_of_symbol;
-    }
-
-    private function has_won($x, $y, $symbol)
-    {
-        if($this->is_principal_diagonal($x, $y) and $this->all_symbols_match($symbol, 'diagonal_total', self::PRINCIPAL_DIAGONAL))
-            return true;
-        if($this->is_minor_diagonal($x, $y) and $this->all_symbols_match($symbol, 'diagonal_total', self::MINOR_DIAGONAL))
-            return true;
-        return $this->all_symbols_match($symbol, 'row_total', $x) or $this->all_symbols_match($symbol, 'col_total', $y);
     }
 }
