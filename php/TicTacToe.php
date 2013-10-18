@@ -56,14 +56,14 @@ class Referee
 
     public function is_game_over($x, $y, $symbol, $move_count)
     {
-        if ($this->has_won($x, $y, $symbol))
+        if ($this->is_winning_move($x, $y, $symbol))
             return "$symbol won the Game!";
         if ($this->is_board_completely_filled($move_count))
             return "Its a Draw!";
         return "continue";
     }
 
-    private function has_won($x, $y, $symbol)
+    private function is_winning_move($x, $y, $symbol)
     {
         if ($this->is_principal_diagonal($x, $y) and $this->all_symbols_match($symbol, 'diagonal_total', self::PRINCIPAL_DIAGONAL))
             return true;

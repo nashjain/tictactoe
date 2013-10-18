@@ -1,7 +1,7 @@
 package com.agilefaqs.tdd.demo;
 
 public class TicTacToe {
-	public static final char EMPTY = '\u0000';
+	public static final char BLANK = '\u0000';
 	private final char[][] board;
 	private int moveCount;
 	private Referee refree;
@@ -17,19 +17,15 @@ public class TicTacToe {
 		return board.clone();
 	}
 
-	public void move(int x, int y) {
-		validateCellIsEmpty(x, y);
+	public String move(int x, int y) {
+		if (board[x][y] != BLANK)
+			return "(" + x + "," + y + ") is already occupied";
 		board[x][y] = currentSymbol();
-		refree.stopGameIfItsOver(x, y, board[x][y], ++moveCount);
+		return refree.isGameOver(x, y, board[x][y], ++moveCount);
 	}
 
 	private char currentSymbol() {
 		return moveCount % 2 == 0 ? 'X' : 'O';
-	}
-
-	private void validateCellIsEmpty(int x, int y) {
-		if (board[x][y] != EMPTY)
-			throw new CellOccupiedException(x, y);
 	}
 
 	private class Referee {
@@ -48,18 +44,19 @@ public class TicTacToe {
 			diagonalTotal = new int[NO_OF_DIAGONALS];
 		}
 
-		private void stopGameIfItsOver(int x, int y, char symbol, int moveCount) {
-			if (hasSomeoneWonTheGame(x, y, symbol))
-				throw new GameOverException(symbol + " won the game!");
+		private String isGameOver(int x, int y, char symbol, int moveCount) {
+			if (isWinningMove(x, y, symbol))
+				return symbol + " won the game!";
 			if (isBoardCompletelyFilled(moveCount))
-				throw new GameOverException("Its a Draw!");
+				return "Its a Draw!";
+			return "continue";
 		}
 
 		private boolean isBoardCompletelyFilled(int moveCount) {
 			return moveCount == gridSize * gridSize;
 		}
 
-		private boolean hasSomeoneWonTheGame(int x, int y, char symbol) {
+		private boolean isWinningMove(int x, int y, char symbol) {
 			if (isPrincipalDiagonal(x, y) && allSymbolsMatch(symbol, diagonalTotal, PRINCIPAL))
 				return true;
 			if (isMinorDiagonal(x, y) && allSymbolsMatch(symbol, diagonalTotal, MINOR))
@@ -80,17 +77,4 @@ public class TicTacToe {
 			return x + y == gridSize - 1;
 		}
 	}
-}
-
-final class CellOccupiedException extends RuntimeException {
-	public CellOccupiedException(int x, int y) {
-		super("(" + x + "," + y + ") is already occupied");
-	}
-}
-
-final class GameOverException extends RuntimeException {
-	public GameOverException(String msg) {
-		super(msg);
-	}
-
 }
