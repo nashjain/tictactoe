@@ -1,0 +1,14 @@
+{
+    "name": "agilefaqs/tictactoe",
+    "description": "Simple Tic Tac Toe Game without the UI",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Naresh Jain",
+            "email": "nashjain@gmail.com"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": "3.7.28"
+    }
+}
