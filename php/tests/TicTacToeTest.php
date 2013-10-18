@@ -52,6 +52,25 @@ class TicTacToeTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("(1,1) is already occupied", $this->game->move(1, 1));
     }
 
+    public function  testFirstPlayerWithAllSymbolsInOneRowWins()
+    {
+        $this->game->move(0, 0);
+        $this->game->move(1, 0);
+        $this->game->move(0, 1);
+        $this->game->move(2, 1);
+        $this->assertEquals("X won the Game!", $this->game->move(0, 2));
+    }
+
+    public function  testFirstPlayerWithAllSymbolsInOneColumnWins()
+    {
+        $this->game->move(1, 1);
+        $this->game->move(0, 0);
+        $this->game->move(2, 1);
+        $this->game->move(1, 0);
+        $this->game->move(2, 2);
+        $this->assertEquals("O won the Game!", $this->game->move(2, 0));
+    }
+
     private function verify_board_is($expectedBoard)
     {
         $this->assertEquals($expectedBoard, $this->game->display_board());
